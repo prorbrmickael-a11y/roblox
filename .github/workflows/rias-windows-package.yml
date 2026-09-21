@@ -1,0 +1,26 @@
+name: RIAS Windows package validation
+
+on:
+  push:
+    branches:
+      - test/rias-4.2.1
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-smoke:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify package checksum
+        shell: pwsh
+        run: |
+          $manifest = Get-Content candidates/manifest.json -Raw | ConvertFrom-Json
+          $actual = (Get-FileHash candidates/RobloxIAStudio_Windows_4.2.1.zip -Algorithm SHA256).Hash
+          if ($actual -ne ([string]$manifest.sha256).ToUpperInvariant()) { throw 'Candidate SHA-256 mismatch.' }
+      - name: Execute Windows smoke tests
+        shell: pwsh
+        run: ./tests/windows_smoke.ps1 -PackagePath ./candidates/RobloxIAStudio_Windows_4.2.1.zip

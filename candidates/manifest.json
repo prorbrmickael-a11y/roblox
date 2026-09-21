@@ -1,0 +1,6 @@
+{
+  "latestVersion": "4.2.1",
+  "packageUrl": "RobloxIAStudio_Windows_4.2.1.zip",
+  "sha256": "3604A2EC98976DC8F5DE9CAC88DB92A37ED2E469482E682255C1FFBDAF453777",
+  "releaseNotes": "Fiabilisation du moteur Ollama et diagnostic Windows reel de bout en bout."
+}
